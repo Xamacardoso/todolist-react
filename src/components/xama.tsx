@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 // aqui eu criei uma props que vai ser passada pro meu cpnt
@@ -7,7 +9,7 @@ interface props {
 }
 
 export default function Xama({ texto, bg_text = "bg-red-500" }: props) {
-  const [opa, setOpa] = useState<boolean>();
+  const [opa, setOpa] = useState<number>(0);
 
   return (
     <div>
@@ -15,7 +17,14 @@ export default function Xama({ texto, bg_text = "bg-red-500" }: props) {
       <p className={`${bg_text} p-6 border-white border-4 rounded-xl`}>
         {texto}
       </p>
-      <button>opa</button>
+      <p>{opa}</p>
+      <button
+        onClick={() => {
+          setOpa(opa + 1);
+        }}
+      >
+        opa
+      </button>
     </div>
   );
 }
