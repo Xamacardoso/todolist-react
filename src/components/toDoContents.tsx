@@ -1,14 +1,12 @@
 "use-client";
 
-import { useRef, useState, useEffect } from "react";
-import AddToDoItem from "./addToDo";
-import { IToDoItem } from "./todoItem";
-import Task from "./todoItem";
+import { useEffect, useState } from "react";
 import { ULID } from "ulidx";
+import AddToDoItem from "./addToDo";
+import Task, { IToDoItem } from "./todoItem";
 
 export default function ToDoContents() {
   // Para reconhecer o input
-  const inputRef = useRef<HTMLInputElement>(null);
   const [data, setData] = useState<IToDoItem[]>([]); // data é uma array de interfaces de itens de tasks
 
   // Função para verificar se localStorage está disponível
@@ -50,15 +48,22 @@ export default function ToDoContents() {
     setData(newData); // Seta data para atualizar a lista de data
   }
 
+  function handleEditing(id: ULID, updaterItem: IToDoItem){
+    const newData = data.map((task) => task.id === id ? {...updaterItem
+    } : task);
+    console.log("OLHA MEUS DADOS AQUI: ", newData);
+    setData(newData);
+  }
+
   return (
     <div className="flex flex-col items-center ">
       <h1 className="text-4xl">PINDAMONHAHNGABA TASKS</h1>
       <div>
-        <AddToDoItem inputRef={inputRef} tasks={data} setTasks={setData} />
+        <AddToDoItem tasks={data} setTasks={setData} />
         <div className="mr-2 min-h-screen pt-10 gap-2 font-[family-name:var(--font-geist-sans)]">
           {data.length > 0 ? (
             data.map((a) => (
-              <Task handleDelete={handleDeletion} key={a.id} toDoItem={a} />
+              <Task editUpdate={handleEditing} handleDelete={handleDeletion} key={a.id} toDoItem={a} />
             ))
           ) : (
             <p>Sem nada</p>
