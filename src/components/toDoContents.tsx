@@ -9,7 +9,7 @@ import { ULID } from "ulidx";
 export default function ToDoContents() {
   // Para reconhecer o input
   const inputRef = useRef<HTMLInputElement>(null);
-  const [data, setData] = useState<IToDoItem[]>([]); // data é uma array de itens de tasks
+  const [data, setData] = useState<IToDoItem[]>([]); // data é uma array de interfaces de itens de tasks
 
   // Função para verificar se localStorage está disponível
   function isLocalStorageAvailable() {
@@ -23,6 +23,7 @@ export default function ToDoContents() {
       localStorage.removeItem(testKey);
       return isAvailable;
     } catch (error) {
+      console.log(error);
       return false;
     }
   }
@@ -37,6 +38,7 @@ export default function ToDoContents() {
       console.log("localStorage não está disponível");
     }
   }, []);
+
   useEffect(() => {
     console.log("Saving data: ", data);
     localStorage.setItem("data", JSON.stringify(data));
@@ -49,17 +51,20 @@ export default function ToDoContents() {
   }
 
   return (
-    <>
-      <AddToDoItem inputRef={inputRef} tasks={data} setTasks={setData} />
-      <div className="grid items-center justify-items-center min-h-screen p-8 pb-20 gap-2 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-        {data.length > 0 ? (
-          data.map((a) => (
-            <Task handleDelete={handleDeletion} key={a.id} toDoItem={a} />
-          ))
-        ) : (
-          <p>Sem nada</p>
-        )}
+    <div className="flex flex-col items-center ">
+      <h1 className="text-4xl">PINDAMONHAHNGABA TASKS</h1>
+      <div>
+        <AddToDoItem inputRef={inputRef} tasks={data} setTasks={setData} />
+        <div className="mr-2 min-h-screen pt-10 gap-2 font-[family-name:var(--font-geist-sans)]">
+          {data.length > 0 ? (
+            data.map((a) => (
+              <Task handleDelete={handleDeletion} key={a.id} toDoItem={a} />
+            ))
+          ) : (
+            <p>Sem nada</p>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   );
 }
