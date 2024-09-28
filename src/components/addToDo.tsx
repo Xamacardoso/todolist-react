@@ -1,20 +1,24 @@
+"use client" // add
+
 import { Dispatch, RefObject, SetStateAction } from "react";
 import { IToDoItem } from "./todoItem";
 import { ulid } from "ulidx";
 
+// Props do adicionador
 type Props = {
-  tasks: IToDoItem[];
+  tasks: IToDoItem[]; // Array de tasks
   setTasks: Dispatch<SetStateAction<IToDoItem[]>>;
   inputRef: RefObject<HTMLInputElement>;
 };
 
+// Barra de adicionar tasks
 export default function AddToDoItem({ tasks, setTasks, inputRef }: Props) {
   function handleClick() {
     if (inputRef.current) {
       const taskName: string = inputRef.current.value;
-      tasks.push({ isDone: false, text: taskName, id: ulid() });
+      const newTask: IToDoItem = { isDone: false, text: taskName, id: ulid() };
+      setTasks((prevTasks)=>[...prevTasks, newTask]);
       console.log(tasks);
-      setTasks([...tasks]);
       inputRef.current.value = "";
     }
   }
