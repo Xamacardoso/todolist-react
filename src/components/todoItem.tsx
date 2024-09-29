@@ -34,12 +34,11 @@ export default function ToDoItem({ toDoItem, handleDelete, editUpdate }: props) 
 
   function saveEdition(){
     setEditing(false);
-    editUpdate(toDoItem.id, {...toDoItem, text: inputValue})
+    editUpdate(toDoItem.id, {...toDoItem, text: inputValue});
   }
 
   return (
     <div className="pb-1.5 flex space-x-2 justify-between">
-      <p className="text-white">{String(made)}</p>
       <div className="flex space-x-2">
         {editing ? (
           <input
@@ -52,11 +51,12 @@ export default function ToDoItem({ toDoItem, handleDelete, editUpdate }: props) 
           <>
             <input
               type="checkbox"
-              defaultChecked={made}
+              checked={made}
               onClick={() => {
-                setMade(!made);
+                const newValue = !made
+                setMade(newValue);
                 console.log("Minha tarefa está feita: ", made)
-                editUpdate(toDoItem.id, {...toDoItem, isDone: made}) 
+                editUpdate(toDoItem.id, {...toDoItem, isDone: newValue});
               }}
             ></input>
             <p className={`flex-wrap ${made && "line-through"}`}>

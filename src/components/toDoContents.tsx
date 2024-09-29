@@ -9,50 +9,50 @@ export default function ToDoContents() {
   // Para reconhecer o input
   const [data, setData] = useState<IToDoItem[]>([]); // data é uma array de interfaces de itens de tasks
 
-  // Função para verificar se localStorage está disponível
-  function isLocalStorageAvailable() {
-    const testKey = "xama";
-    const testValue = "xamapicudo";
-
-    // Tenta adicionar e pegar os valores da chave xama, pra ver se nao tem nenhum erro
-    try {
-      localStorage.setItem(testKey, testValue);
-      const isAvailable = localStorage.getItem(testKey) === testValue;
-      localStorage.removeItem(testKey);
-      return isAvailable;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  }
-
   useEffect(() => {
-    if (isLocalStorageAvailable()) {
-      const storedData = localStorage.getItem("data");
-      if (storedData) {
-        setData(JSON.parse(storedData) as IToDoItem[]);
-      }
-    } else {
-      console.log("localStorage não está disponível");
-    }
+    // Caminho do endpoint, metodo get
+    fetch("http://localhost:3000/tasks/", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      response.json().then((data) => setData(data));
+    });
   }, []);
-
-  useEffect(() => {
-    console.log("Saving data: ", data);
-    localStorage.setItem("data", JSON.stringify(data));
-  }, [data]);
 
   // Filtra a nova array a partir de data
   function handleDeletion(id: ULID) {
-    const newData = data.filter((item) => item.id !== id);
-    setData(newData); // Seta data para atualizar a lista de data
+    fetch(`http://localhost:3000/tasks/${id}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+    }).then((response) => {
+      const newData = data.filter((item) => item.id !== id);
+      response.json().then(()=>setData(newData)) // Seta data para atualizar a lista de data
+    });
   }
 
-  function handleEditing(id: ULID, updaterItem: IToDoItem){
-    const newData = data.map((task) => task.id === id ? {...updaterItem
-    } : task);
-    console.log("OLHA MEUS DADOS AQUI: ", newData);
-    setData(newData);
+  function handleEditing(id: ULID, updaterItem: IToDoItem) {
+    // Busca o url com o id do meu item
+    fetch(`http://localhost:3000/tasks/${id}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updaterItem), // Passo o meu item atualizado como body
+      method: "PATCH", // Método para atualizar
+    }).then((response) => {
+      // Quando obtiver resposta (que pode ser um erro)
+      const newData = data.map(
+        (
+          task // Minha nova array de data
+        ) => (task.id === id ? { ...updaterItem } : task)
+      );
+      response.json().then(() => setData(newData)); // Atualiza localmente quando fizer a requisicao
+    });
   }
 
   return (
@@ -60,10 +60,15 @@ export default function ToDoContents() {
       <h1 className="text-4xl">PINDAMONHAHNGABA TASKS</h1>
       <div>
         <AddToDoItem tasks={data} setTasks={setData} />
-        <div className="mr-2 min-h-screen pt-10 gap-2 font-[family-name:var(--font-geist-sans)]">
+        <div className={`mr-2 ${!(data.length > 0) && "text-center"} min-h-screen pt-10 gap-2 font-[family-name:var(--font-geist-sans)]`}>
           {data.length > 0 ? (
             data.map((a) => (
-              <Task editUpdate={handleEditing} handleDelete={handleDeletion} key={a.id} toDoItem={a} />
+              <Task
+                editUpdate={handleEditing}
+                handleDelete={handleDeletion}
+                key={a.id}
+                toDoItem={a}
+              />
             ))
           ) : (
             <p>Sem nada</p>

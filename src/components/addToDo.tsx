@@ -10,7 +10,7 @@ type Props = {
 };
 
 // Barra de adicionar tasks
-export default function AddToDoItem({ tasks, setTasks}: Props) {
+export default function AddToDoItem({ tasks, setTasks }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   function handleClick() {
     if (inputRef.current) {
@@ -19,7 +19,18 @@ export default function AddToDoItem({ tasks, setTasks}: Props) {
         return;
       }
       const newTask: IToDoItem = { isDone: false, text: taskName, id: ulid() };
-      setTasks((prevTasks) => [...prevTasks, newTask]);
+      fetch("http://localhost:3000/tasks/", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body:JSON.stringify(newTask)
+      }).then((response) => {
+        response.json().then(() => {
+          setTasks((prevTasks) => [...prevTasks, newTask]);
+        });
+      });
       console.log(tasks);
       inputRef.current.value = "";
     }
