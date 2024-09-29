@@ -1,10 +1,35 @@
+## Ryan Faustino leia isso
+
+Pra rodar o projeto, instala as dependencias e depois roda o projeto:
+
+```
+# faz isso em uma instância de terminal
+npm i
+npx json-server ./src/db/tasks.json
+
+```
+
+Na outra instância de terminal:
+```
+npm run dev
+```
+
+Agora é so entrar no endereço e porta do localhost do terminal que rodou a dev.
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
 First, run the development server:
 
-```bash
+```bash1) Yaqub Qamar ad-bin dibiazah 
+2) Khalid Kashmiri 
+3) Khibr Karawita
+4) Ismail Ahmad Kanabawi
+5) Usman Abdul Jalil Shisha
+6) Muhhamad Sumbul
 npm run dev
 # or
 yarn dev
