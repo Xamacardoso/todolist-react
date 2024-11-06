@@ -3,7 +3,7 @@
 To run the project, install all dependencies and start json-server
 
 ```
-# faz isso em uma instância de terminal
+# Shell 1
 npm i
 npx json-server ./src/db/tasks.json
 
@@ -11,6 +11,7 @@ npx json-server ./src/db/tasks.json
 
 In another shell instance, run the following command:
 ```
+# Shell 2
 npm run dev
 ```
 
