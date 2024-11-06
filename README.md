@@ -1,6 +1,6 @@
-## Ryan Faustino leia isso
+## How to use
 
-Pra rodar o projeto, instala as dependencias e depois roda o projeto:
+To run the project, install all dependencies and start json-server
 
 ```
 # faz isso em uma instância de terminal
@@ -9,41 +9,17 @@ npx json-server ./src/db/tasks.json
 
 ```
 
-Na outra instância de terminal:
+In another shell instance, run the following command:
 ```
 npm run dev
 ```
 
-Agora é so entrar no endereço e porta do localhost do terminal que rodou a dev.
+Now just enter in your browser and type the localhost address and port that was shown in the terminal.
 
 
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
-
-First, run the development server:
-
-```bash1) Yaqub Qamar ad-bin dibiazah 
-2) Khalid Kashmiri 
-3) Khibr Karawita
-4) Ismail Ahmad Kanabawi
-5) Usman Abdul Jalil Shisha
-6) Muhhamad Sumbul
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 
